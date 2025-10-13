@@ -1,7 +1,13 @@
 const express = require('express');
 const cors = require('cors');
-const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
+
+var brevo = require('sib-api-v3-sdk');
+var defaultClient = SibApiV3Sdk.ApiClient.instance;
+var apiKey = defaultClient.authentications['api-key'];
+apiKey.apiKey = process.env.BREVO_API;
+
+const apiInstance = new brevo.TransactionalEmailsApi();
 
 require('dotenv').config();
 
@@ -19,31 +25,15 @@ app.get("/api", (req, res) => {
     res.json({ message: "Hello from server!" })
 });
 
-const transporter = nodemailer.createTransport({
-    host: 'smtp-relay.brevo.com',
-    port: 587,
-    secure: false,
-    auth: {
-      user: process.env.BREVO_USER,
-      pass: process.env.BREVO_PASS
-    }
-});
-
-transporter.verify((error) => {
-    if (error) {
-        console.log("HERE'S THE ERROR:\n",error)
-    } else {
-        console.log('Ready to send!')
-    }
-})
-
-app.post("/api/contact", (req, res) => {
+app.post("/api/contact", async (req, res) => {
     console.log("📩 Requisição recebida:", req.body);
+
     const posto = req.body.posto;
     const nvl = req.body.nvl;
+
     const mail = {
-        from: process.env.BREVO_FROM,
-        to: process.env.SEND_USER,
+        sender: { email: process.env.BREVO_FROM },
+        to: [{ email: process.env.SEND_USER }],
         subject: 'Notificação Acesso Mais Seguro',
         html: `
             Prezados,<br>
@@ -53,15 +43,16 @@ app.post("/api/contact", (req, res) => {
             <strong>Nível:</strong> ${nvl}
         `
     };
-    transporter.sendMail(mail, (error) => {
-        if (error) {
-            res.status(500).json({code: 500, error});
-            console.log(500,"Message Failed!\n",error)
-        } else {
-            res.json({ code: 200, status: 'Message Sent!' })
-            console.log(200,"Message Sent!")
-        }
-    })
+
+    try {
+        await apiInstance.sendTransacEmail(mail);
+
+        res.status(500).json({code: 500, error});
+        console.log(500,"Message Failed!\n",error)
+    } catch {
+        res.json({ code: 200, status: 'Message Sent!' })
+        console.log(200,"Message Sent!")
+    }
 })
 
 app.listen(PORT, () => {
