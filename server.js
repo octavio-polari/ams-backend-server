@@ -38,6 +38,7 @@ transporter.verify((error) => {
 })
 
 app.post("/api/contact", (req, res) => {
+    console.log("📩 Requisição recebida:", req.body);
     const posto = req.body.posto;
     const nvl = req.body.nvl;
     const mail = {
@@ -65,4 +66,5 @@ app.post("/api/contact", (req, res) => {
 
 app.listen(PORT, () => {
     console.log(`Server is online on port: ${PORT}`)
+    console.log(`Sending e-mail to: ${process.env.SEND_USER}`)
 });
