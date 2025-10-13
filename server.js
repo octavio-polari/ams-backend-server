@@ -55,8 +55,10 @@ app.post("/api/contact", (req, res) => {
     transporter.sendMail(mail, (error) => {
         if (error) {
             res.status(500).json({code: 500, error});
+            console.log(500,"Message Failed!")
         } else {
             res.json({ code: 200, status: 'Message Sent!' })
+            console.log(200,"Message Sent!")
         }
     })
 })
