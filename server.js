@@ -3,7 +3,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 
 var brevo = require('sib-api-v3-sdk');
-var defaultClient = SibApiV3Sdk.ApiClient.instance;
+var defaultClient = brevo.ApiClient.instance;
 var apiKey = defaultClient.authentications['api-key'];
 apiKey.apiKey = process.env.BREVO_API;
 
