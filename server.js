@@ -14,11 +14,7 @@ require('dotenv').config();
 const PORT = process.env.PORT || 8080;
 
 const app = express();
-app.use(cors({
-    origin: "*", // para testar
-    methods: ["GET", "POST"],
-    allowedHeaders: ["Content-Type"],
-}));
+app.use(cors());
 app.use(bodyParser.json());
 
 app.get("/api", (req, res) => {
