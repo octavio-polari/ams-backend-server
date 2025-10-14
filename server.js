@@ -14,7 +14,11 @@ require('dotenv').config();
 const PORT = process.env.PORT || 8080;
 
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin: "*", // para testar
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type"],
+}));
 app.use(bodyParser.json());
 
 app.get("/api", (req, res) => {
@@ -43,11 +47,11 @@ app.post("/api/contact", async (req, res) => {
     try {
         await apiInstance.sendTransacEmail(mail);
 
+        res.json({ code: 200, status: 'Message Sent!' })
+        console.log(200,"Message Sent!")        
+    } catch {
         res.status(500).json({code: 500, error});
         console.log(500,"Message Failed!\n",error)
-    } catch {
-        res.json({ code: 200, status: 'Message Sent!' })
-        console.log(200,"Message Sent!")
     }
 })
 
