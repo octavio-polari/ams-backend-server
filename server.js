@@ -49,7 +49,7 @@ app.post("/api/contact", async (req, res) => {
 
         res.json({ code: 200, status: 'Message Sent!' });
         console.log(200,"Message Sent!");
-    } catch {
+    } catch (error) {
         res.status(500).json({code: 500, error});
         console.log(500,"Message Failed!\n",error);
     }
