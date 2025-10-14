@@ -35,23 +35,23 @@ app.post("/api/contact", async (req, res) => {
         sender: { email: process.env.BREVO_FROM },
         to: [{ email: process.env.SEND_USER }],
         subject: 'Notificação Acesso Mais Seguro',
-        html: `
+        htmlContent: `
             Prezados,<br>
             Venho por meio desta notificar uma situação de risco.<br>
             <br>
             <strong>Posto:</strong> ${posto}<br>
             <strong>Nível:</strong> ${nvl}
-        `
+        `,
     };
 
     try {
         await apiInstance.sendTransacEmail(mail);
 
-        res.json({ code: 200, status: 'Message Sent!' })
-        console.log(200,"Message Sent!")        
+        res.json({ code: 200, status: 'Message Sent!' });
+        console.log(200,"Message Sent!");
     } catch {
         res.status(500).json({code: 500, error});
-        console.log(500,"Message Failed!\n",error)
+        console.log(500,"Message Failed!\n",error);
     }
 })
 
