@@ -25,7 +25,7 @@ app.get("/api", (req, res) => {
     res.json({ message: "Hello from server!" })
 });
 
-app.post("/api/contact", async (req, res) => {
+app.post("/api/ams", async (req, res) => {
     console.log("📩 Requisição recebida:", req.body);
 
     const posto = req.body.posto;
@@ -34,7 +34,7 @@ app.post("/api/contact", async (req, res) => {
     const mail = {
         sender: { email: process.env.BREVO_FROM },
         to: [{ email: process.env.SEND_USER }],
-        subject: 'Notificação Acesso Mais Seguro',
+        subject: `${nvl} Notificação Acesso Mais Seguro ${nvl}`,
         htmlContent: `
             Prezados,<br>
             Venho por meio desta notificar uma situação de risco.<br>
@@ -54,6 +54,32 @@ app.post("/api/contact", async (req, res) => {
         console.log(500,"Message Failed!\n",error);
     }
 })
+
+// app.post("/api/bolsa_familia", async (req, res) => {
+//     console.log("📩 Requisição recebida:", req.body);
+
+//     const attachment = req.body.attachment;
+
+//     const mail = {
+//         sender: { email: process.env.BREVO_FROM },
+//         to: [{ email: process.env.SEND_USER }],
+//         subject: `${nvl} Notificação Acesso Mais Seguro ${nvl}`,
+//         htmlContent: `
+//             Prezados,<br>
+//             ${attachment}
+//         `,
+//     };
+
+//     try {
+//         await apiInstance.sendTransacEmail(mail);
+
+//         res.json({ code: 200, status: 'Message Sent!' });
+//         console.log(200,"Message Sent!");
+//     } catch (error) {
+//         res.status(500).json({code: 500, error});
+//         console.log(500,"Message Failed!\n",error);
+//     }
+// })
 
 app.listen(PORT, () => {
     console.log(`Server is online on port: ${PORT}`)
