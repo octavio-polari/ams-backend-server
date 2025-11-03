@@ -82,35 +82,38 @@ app.post("/api/ams", async (req, res) => {
 // })
 
 app.post('/api/bolsa_familia', async (req, res) => {
+    console.log("📩 Requisição recebida em /api/bolsa_familia");
+
     const { filename, mimeType, data } = req.body;
+
     if (!filename || !data) {
         return res.status(400).json({ success: false, message: 'filename e data (base64) são obrigatórios' });
     }
 
-    // cria buffer a partir do base64
-    const buffer = Buffer.from(data, 'base64');
-
-    // montar e-mail
-    const mailOptions = {
-        from: process.env.BREVO_FROM,
-        to: process.env.SEND_USER,
-        subject: 'PDF do formulário',
-        text: 'Segue em anexo o PDF do formulário.',
-        attachments: [
+    const mail = {
+        sender: { email: process.env.BREVO_FROM },
+        to: [{ email: process.env.SEND_USER }],
+        subject: '📎 PDF do Cadastro do Bolsa Família',
+        htmlContent: `
+            Prezados,<br>
+            <br>
+            Segue em anexo o PDF gerado pelo aplicativo de cadastro do Bolsa Família.<br><br>
+            <strong>Arquivo:</strong> ${filename}
+        `,
+        attachment: [
             {
-                filename: filename,
-                content: buffer,
-                contentType: mimeType || 'application/pdf'
-            }
-        ]
+                name: filename,
+                content: data, // o Brevo já espera base64 direto aqui
+            },
+        ],
     };
-    
+
     try {
-        const info = await transporter.sendMail(mailOptions);
-        console.log('E-mail enviado:', info.messageId);
-        res.json({ success: true, message: 'E-mail enviado', info: info });
+        const response = await apiInstance.sendTransacEmail(mail);
+        console.log('✅ E-mail enviado com sucesso:', response.messageId || response);
+        res.json({ success: true, message: 'E-mail enviado com sucesso!' });
     } catch (err) {
-        console.error('Erro no /api/bolsa_familia:', err);
+        console.error('❌ Erro no envio do e-mail:', err);
         res.status(500).json({ success: false, message: 'Erro ao enviar e-mail', error: String(err) });
     }
 });
