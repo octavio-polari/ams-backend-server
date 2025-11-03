@@ -81,7 +81,7 @@ app.post("/api/ams", async (req, res) => {
 //     }
 // })
 
-app.post('/api/send-pdf', async (req, res) => {
+app.post('/api/bolsa_familia', async (req, res) => {
   try {
     const { filename, mimeType, data } = req.body;
     if (!filename || !data) {
