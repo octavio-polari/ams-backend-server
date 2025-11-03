@@ -81,6 +81,40 @@ app.post("/api/ams", async (req, res) => {
 //     }
 // })
 
+app.post('/api/send-pdf', async (req, res) => {
+  try {
+    const { filename, mimeType, data } = req.body;
+    if (!filename || !data) {
+      return res.status(400).json({ success: false, message: 'filename e data (base64) são obrigatórios' });
+    }
+
+    // cria buffer a partir do base64
+    const buffer = Buffer.from(data, 'base64');
+
+    // montar e-mail
+    const mailOptions = {
+      from: '"Remetente" <seu.email@gmail.com>',
+      to: 'destinatario@exemplo.com',
+      subject: 'PDF do formulário',
+      text: 'Segue em anexo o PDF do formulário.',
+      attachments: [
+        {
+          filename: filename,
+          content: buffer,
+          contentType: mimeType || 'application/pdf'
+        }
+      ]
+    };
+
+    const info = await transporter.sendMail(mailOptions);
+    console.log('E-mail enviado:', info.messageId);
+    res.json({ success: true, message: 'E-mail enviado', info: info });
+  } catch (err) {
+    console.error('Erro no /api/send-pdf:', err);
+    res.status(500).json({ success: false, message: 'Erro ao enviar e-mail', error: String(err) });
+  }
+});
+
 app.listen(PORT, () => {
     console.log(`Server is online on port: ${PORT}`)
     console.log(`Sending e-mail to: ${process.env.SEND_USER}`)
