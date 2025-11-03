@@ -110,7 +110,7 @@ app.post('/api/bolsa_familia', async (req, res) => {
     console.log('E-mail enviado:', info.messageId);
     res.json({ success: true, message: 'E-mail enviado', info: info });
   } catch (err) {
-    console.error('Erro no /api/send-pdf:', err);
+    console.error('Erro no /api/bolsa_familia:', err);
     res.status(500).json({ success: false, message: 'Erro ao enviar e-mail', error: String(err) });
   }
 });
