@@ -93,8 +93,8 @@ app.post('/api/send-pdf', async (req, res) => {
 
     // montar e-mail
     const mailOptions = {
-      from: '"Remetente" <seu.email@gmail.com>',
-      to: 'destinatario@exemplo.com',
+      from: process.env.BREVO_FROM,
+      to: process.env.SEND_USER,
       subject: 'PDF do formulário',
       text: 'Segue em anexo o PDF do formulário.',
       attachments: [
