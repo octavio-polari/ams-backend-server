@@ -82,10 +82,9 @@ app.post("/api/ams", async (req, res) => {
 // })
 
 app.post('/api/bolsa_familia', async (req, res) => {
-  try {
     const { filename, mimeType, data } = req.body;
     if (!filename || !data) {
-      return res.status(400).json({ success: false, message: 'filename e data (base64) são obrigatórios' });
+        return res.status(400).json({ success: false, message: 'filename e data (base64) são obrigatórios' });
     }
 
     // cria buffer a partir do base64
@@ -93,27 +92,29 @@ app.post('/api/bolsa_familia', async (req, res) => {
 
     // montar e-mail
     const mailOptions = {
-      from: process.env.BREVO_FROM,
-      to: process.env.SEND_USER,
-      subject: 'PDF do formulário',
-      text: 'Segue em anexo o PDF do formulário.',
-      attachments: [
-        {
-          filename: filename,
-          content: buffer,
-          contentType: mimeType || 'application/pdf'
-        }
-      ]
+        from: process.env.BREVO_FROM,
+        to: process.env.SEND_USER,
+        subject: 'PDF do formulário',
+        text: 'Segue em anexo o PDF do formulário.',
+        attachments: [
+            {
+                filename: filename,
+                content: buffer,
+                contentType: mimeType || 'application/pdf'
+            }
+        ]
     };
-
-    const info = await transporter.sendMail(mailOptions);
-    console.log('E-mail enviado:', info.messageId);
-    res.json({ success: true, message: 'E-mail enviado', info: info });
-  } catch (err) {
-    console.error('Erro no /api/bolsa_familia:', err);
-    res.status(500).json({ success: false, message: 'Erro ao enviar e-mail', error: String(err) });
-  }
+    
+    try {
+        const info = await transporter.sendMail(mailOptions);
+        console.log('E-mail enviado:', info.messageId);
+        res.json({ success: true, message: 'E-mail enviado', info: info });
+    } catch (err) {
+        console.error('Erro no /api/bolsa_familia:', err);
+        res.status(500).json({ success: false, message: 'Erro ao enviar e-mail', error: String(err) });
+    }
 });
+
 
 app.listen(PORT, () => {
     console.log(`Server is online on port: ${PORT}`)
