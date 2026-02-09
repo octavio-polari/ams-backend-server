@@ -38,11 +38,49 @@ app.post("/api/ams", async (req, res) => {
         to: [{ email: process.env.SEND_USER }],
         subject: `${nvl} Notificação Acesso Mais Seguro ${nvl}`,
         htmlContent: `
-            Prezados,<br>
-            Venho por meio desta notificar uma situação de risco.<br>
-            <br>
-            <strong>Posto:</strong> ${posto}<br>
-            <strong>Nível:</strong> ${nvl}
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="UTF-8">
+                <title>Notificação Acesso Mais Seguro</title>
+            </head>
+            <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 20px;">
+                <div style="max-width: 600px; margin: 0 auto;">
+                    <p>Prezados,<br>
+                    Venho por meio desta notificar o estado da região próxima à unidade <strong>${posto}</strong>.<br>
+                    <br>
+                    <strong>Nível:</strong> ${nvl}
+                    </p>
+                    
+                    <div style="margin-top: 20px; margin-bottom: 20px;">
+                        ${nvl === '🟢' ? 
+                            '<p>A área apresenta <strong style="color: #28a745;">situações normais</strong>, sem ocorrências. Todos os serviços estão acessíveis e a unidade está funcionando dentro dos parâmetros esperados.</p>' 
+                            : ''}
+                            
+                        ${nvl === '🟡' ? 
+                            '<p>A área apresenta <strong style="color: #ffc107;">situação de alerta </strong>, necessário averiguação de ocorrência no local.</p>' 
+                            : ''}
+                            
+                        ${nvl === '🟠' ? 
+                            '<p>A área apresenta <strong style="color: #ffc107;">situação de perigo</strong>, podendo evoluir para alto risco. Atenção para novas atualizações.</p>' 
+                            : ''}
+                            
+                        ${nvl === '🔴' ? 
+                            '<p>A área apresenta <strong style="color: #dc3545;">situação de alto risco</strong>, causando dependência de interrupção nos serviços da unidade até normalização.</p>' 
+                            : ''}
+                    </div>
+
+                    <div>
+                        <p>${obs}</p>
+                    </div>
+                    
+                    <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; font-size: 12px; color: #666;">
+                        <p><strong>Data e hora da notificação:</strong> ${new Date().toLocaleString('pt-BR')}<br>
+                        <p style="margin-top: 20px;">Este é um e-mail automático. Em caso de dúvidas, entre em contato com <a href="mailto:octavio.polari@gmail.com">Octavio Polari Jardim 50562</a>.</p>
+                    </div>
+                </div>
+            </body>
+            </html>
         `,
     };
 
@@ -98,10 +136,8 @@ app.post("/api/conexao_estavel", async (req, res) => {
                     </div>
                     
                     <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; font-size: 12px; color: #666;">
-                        <p><strong>Data e hora da verificação:</strong> ${new Date().toLocaleString('pt-BR')}<br>
-                        <strong>Responsável pelo monitoramento:</strong> Sistema Automático de Notificação</p>
-                        
-                        <p style="margin-top: 20px;">Este é um e-mail automático. Em caso de dúvidas, entre em contato com a equipe de TI.</p>
+                        <p><strong>Data e hora da notificação:</strong> ${new Date().toLocaleString('pt-BR')}<br>
+                        <p style="margin-top: 20px;">Este é um e-mail automático. Em caso de dúvidas, entre em contato com <a href="mailto:octavio.polari@gmail.com">Octavio Polari Jardim 50562</a>.</p>
                     </div>
                 </div>
             </body>
