@@ -84,15 +84,15 @@ app.post("/api/conexao_estavel", async (req, res) => {
                     </p>
                     
                     <div style="margin-top: 20px;">
-                        ${nvl === 'disponível' ? 
+                        ${nvl === '🟢' ? 
                             '<p>A conexão de internet está <strong style="color: #28a745;">operando normalmente</strong>, sem interrupções detectadas. Todos os serviços estão acessíveis e a velocidade está dentro dos parâmetros esperados.</p>' 
                             : ''}
                             
-                        ${nvl === 'instável' ? 
+                        ${nvl === '🟡' ? 
                             '<p>A conexão de internet está <strong style="color: #ffc107;">apresentando instabilidade</strong>, com flutuações intermitentes. Isso pode causar lentidão no acesso a serviços e eventual indisponibilidade temporária.</p>' 
                             : ''}
                             
-                        ${nvl === 'indisponível' ? 
+                        ${nvl === '🔴' ? 
                             '<p>A conexão de internet está <strong style="color: #dc3545;">completamente inoperante</strong>. Não há acesso à rede externa, o que impacta todos os serviços dependentes de conectividade.</p>' 
                             : ''}
                     </div>
