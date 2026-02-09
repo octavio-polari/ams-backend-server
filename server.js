@@ -26,6 +26,7 @@ app.get("/api", (req, res) => {
     res.json({ message: "Hello from server!" })
 });
 
+
 app.post("/api/ams", async (req, res) => {
     console.log("📩 Requisição recebida:", req.body);
 
@@ -56,6 +57,68 @@ app.post("/api/ams", async (req, res) => {
     }
 })
 
+app.post("/api/conexao_estavel", async (req, res) => {
+    console.log("📩 Requisição recebida:", req.body);
+
+    const posto = req.body.posto;
+    const nvl = req.body.nvl;
+    const obs = req.body.obs;
+
+    const mail = {
+        sender: { email: process.env.BREVO_FROM },
+        to: [{ email: process.env.SEND_USER }],
+        subject: `${nvl} Informes Conexão Estável ${nvl}`,
+        htmlContent: `
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="UTF-8">
+                <title>Notificação de Status de Internet</title>
+            </head>
+            <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 20px;">
+                <div style="max-width: 600px; margin: 0 auto;">
+                    <p>Prezados,<br>
+                    Venho por meio desta notificar o estado da conectividade de internet no na unidade <strong>${posto}</strong>.<br>
+                    <br>
+                    <strong>Nível:</strong> ${nvl}
+                    </p>
+                    
+                    <div style="margin-top: 20px;">
+                        ${nvl === 'disponível' ? 
+                            '<p>A conexão de internet está <strong style="color: #28a745;">operando normalmente</strong>, sem interrupções detectadas. Todos os serviços estão acessíveis e a velocidade está dentro dos parâmetros esperados.</p>' 
+                            : ''}
+                            
+                        ${nvl === 'instável' ? 
+                            '<p>A conexão de internet está <strong style="color: #ffc107;">apresentando instabilidade</strong>, com flutuações intermitentes. Isso pode causar lentidão no acesso a serviços e eventual indisponibilidade temporária.</p>' 
+                            : ''}
+                            
+                        ${nvl === 'indisponível' ? 
+                            '<p>A conexão de internet está <strong style="color: #dc3545;">completamente inoperante</strong>. Não há acesso à rede externa, o que impacta todos os serviços dependentes de conectividade.</p>' 
+                            : ''}
+                    </div>
+                    
+                    <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; font-size: 12px; color: #666;">
+                        <p><strong>Data e hora da verificação:</strong> ${new Date().toLocaleString('pt-BR')}<br>
+                        <strong>Responsável pelo monitoramento:</strong> Sistema Automático de Notificação</p>
+                        
+                        <p style="margin-top: 20px;">Este é um e-mail automático. Em caso de dúvidas, entre em contato com a equipe de TI.</p>
+                    </div>
+                </div>
+            </body>
+            </html>
+        `,
+    };
+
+    try {
+        await apiInstance.sendTransacEmail(mail);
+
+        res.json({ code: 200, status: 'Message Sent!' });
+        console.log(200,"Message Sent!");
+    } catch (error) {
+        res.status(500).json({code: 500, error});
+        console.log(500,"Message Failed!\n",error);
+    }
+})
 // app.post("/api/bolsa_familia", async (req, res) => {
 //     console.log("📩 Requisição recebida:", req.body);
 
