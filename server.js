@@ -128,9 +128,9 @@ app.post("/api/conexao_estavel", async (req, res) => {
                                 : ''}
                             
                             ${nvl === '🔴' ? 
-                                `<p>A conexão de internet está <strong style="color: #dc3545;">completamente inoperante</strong>. Não há acesso à rede externa, o que impacta todos os serviços dependentes de conectividade.</p><br><br>
+                                `<p>A conexão de internet está <strong style="color: #dc3545;">completamente inoperante</strong>. Não há acesso à rede externa, o que impacta todos os serviços dependentes de conectividade.</p><br>
                                 <strong>OBS:</strong> <p>${obs}</p>
-                                
+
                                 <div>
                                     ${visita === 'Sim' ? 
                                         '<strong>Visita:</strong> <p style="color: #28a745;"Já foi realizada.</p>'
