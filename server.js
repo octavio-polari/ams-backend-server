@@ -129,16 +129,18 @@ app.post("/api/conexao_estavel", async (req, res) => {
                             
                             ${nvl === '🔴' ? 
                                 `<p>A conexão de internet está <strong style="color: #dc3545;">completamente inoperante</strong>. Não há acesso à rede externa, o que impacta todos os serviços dependentes de conectividade.</p><br><br>
-                                <strong>OBS:</strong> <p>${obs}</p>`
+                                <strong>OBS:</strong> <p>${obs}</p>
+                                
+                                <div>
+                                    ${visita === 'Sim' ? 
+                                        '<strong>Visita:</strong> <p style="color: #28a745;"Já foi realizada.</p>'
+                                        : '<strong>Visita:</strong> <p style="color: #dc3545;">Ainda não realizada.</p>'
+                                    }
+                                </div>`
                             : ''}
                     </div>
                     
-                    <div>
-                        ${visita === 'Sim' ? 
-                            '<strong>Visita:</strong> <p style="color: #28a745;"Já foi realizada.</p>'
-                            : '<strong>Visita:</strong> <p style="color: #dc3545;">Ainda não realizada.</p>'
-                        }
-                    </div>
+                    
 
                     <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; font-size: 12px; color: #666;">
                         <p><strong>Data e hora da notificação:</strong> ${new Date().toLocaleString('pt-BR')}<br>
