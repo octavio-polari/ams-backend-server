@@ -97,6 +97,7 @@ app.post("/api/conexao_estavel", async (req, res) => {
     const posto = req.body.posto;
     const nvl = req.body.nvl;
     const obs = req.body.obs;
+    const visita = req.body.visita;
 
     const mail = {
         sender: { email: process.env.BREVO_FROM },
@@ -119,16 +120,24 @@ app.post("/api/conexao_estavel", async (req, res) => {
                     
                     <div style="margin-top: 20px;">
                         ${nvl === '🟢' ? 
-                            '<p>A conexão de internet está <strong style="color: #28a745;">operando normalmente</strong>, sem interrupções detectadas. Todos os serviços estão acessíveis e a velocidade está dentro dos parâmetros esperados.</p>' 
-                            : ''}
+                                '<p>A conexão de internet está <strong style="color: #28a745;">operando normalmente</strong>, sem interrupções detectadas. Todos os serviços estão acessíveis e a velocidade está dentro dos parâmetros esperados.</p>' 
+                                : ''}
                             
                         ${nvl === '🟡' ? 
-                            '<p>A conexão de internet está <strong style="color: #ffc107;">apresentando instabilidade</strong>, com flutuações intermitentes. Isso pode causar lentidão no acesso a serviços e eventual indisponibilidade temporária.</p>' 
-                            : ''}
+                                '<p>A conexão de internet está <strong style="color: #ffc107;">apresentando instabilidade</strong>, com flutuações intermitentes. Isso pode causar lentidão no acesso a serviços e eventual indisponibilidade temporária.</p>'
+                                : ''}
                             
-                        ${nvl === '🔴' ? 
-                            '<p>A conexão de internet está <strong style="color: #dc3545;">completamente inoperante</strong>. Não há acesso à rede externa, o que impacta todos os serviços dependentes de conectividade.</p>' 
+                            ${nvl === '🔴' ? 
+                                `<p>A conexão de internet está <strong style="color: #dc3545;">completamente inoperante</strong>. Não há acesso à rede externa, o que impacta todos os serviços dependentes de conectividade.</p>
+                                <p>${obs}</p>`
                             : ''}
+                    </div>
+                    
+                    <div>
+                        ${visita === 'Sim' ? 
+                            '<p style="color: #28a745;"Foi realizada visita no posto.</p>'
+                            : '<p style="color: #dc3545;">ainda não foi realizada visita no posto.</p>'
+                        }
                     </div>
                     
                     <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; font-size: 12px; color: #666;">
