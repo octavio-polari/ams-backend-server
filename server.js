@@ -69,10 +69,6 @@ app.post("/api/ams", async (req, res) => {
                             '<p>A área apresenta <strong style="color: #dc3545;">situação de alto risco</strong>, causando dependência de interrupção nos serviços da unidade até normalização.</p>' 
                             : ''}
                     </div>
-
-                    <div>
-                        <p>${obs}</p>
-                    </div>
                     
                     <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; font-size: 12px; color: #666;">
                         <p><strong>Data e hora da notificação:</strong> ${new Date().toLocaleString('pt-BR')}<br>
