@@ -96,8 +96,9 @@ app.post("/api/conexao_estavel", async (req, res) => {
 
     const posto = req.body.posto;
     const nvl = req.body.nvl;
-    const obs = req.body.obs;
     const visita = req.body.visita;
+    const horaVisita = req.body.horaVisita;
+    const volta = req.body.volta;
 
     const mail = {
         sender: { email: process.env.BREVO_FROM },
@@ -133,7 +134,8 @@ app.post("/api/conexao_estavel", async (req, res) => {
 
                                 <div>
                                     ${visita === 'Sim' ? 
-                                        '<strong>Visita:</strong> <p style="color: #28a745;"Já foi realizada.</p>'
+                                        `<strong>Visita:</strong> <p style="color: #28a745;">Foi realizada às <strong>${horaVisita}.</strong></p><br>
+                                        <p>A volta está prevista para ocorrer em: <strong>${volta} horas</strong></p>`
                                         : '<strong>Visita:</strong> <p style="color: #dc3545;">Ainda não realizada.</p>'
                                     }
                                 </div>`
