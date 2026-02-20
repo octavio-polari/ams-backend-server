@@ -132,7 +132,7 @@ app.post("/api/conexao_estavel", async (req, res) => {
                                 `<p>A conexão de internet está <strong style="color: #dc3545;">completamente inoperante</strong>. Não há acesso à rede externa, o que impacta todos os serviços dependentes de conectividade.</p><br>
                                 <div>
                                     ${visita === 'Sim' ? 
-                                        `<strong>Visita:</strong> <p style="color: #28a745;">Foi realizada às <strong>${horaVisita}.</strong></p><br>
+                                        `<strong>Visita:</strong> <p style="color: #28a745;">Foi realizada às <strong>${horaVisita}.</strong></p>
                                         <p>A volta está prevista para ocorrer em: <strong>${volta} horas</strong></p>`
                                         : '<strong>Visita:</strong> <p style="color: #dc3545;">Ainda não realizada.</p>'
                                     }
