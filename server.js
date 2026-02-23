@@ -99,6 +99,7 @@ app.post("/api/conexao_estavel", async (req, res) => {
     const visita = req.body.visita;
     const horaVisita = req.body.horaVisita;
     const volta = req.body.volta;
+    const id = req.body.reqID;
 
     const mail = {
         sender: { email: process.env.BREVO_FROM },
@@ -113,6 +114,7 @@ app.post("/api/conexao_estavel", async (req, res) => {
             </head>
             <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 20px;">
                 <div style="max-width: 600px; margin: 0 auto;">
+                    <p><strong>Nº do Protocolo:</strong> ${id}</p>
                     <p>Prezados,<br>
                     Venho por meio desta notificar o estado da conectividade de internet no na unidade <strong>${posto}</strong>.<br>
                     <br>
