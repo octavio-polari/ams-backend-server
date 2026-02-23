@@ -145,7 +145,7 @@ app.post("/api/conexao_estavel", async (req, res) => {
                     
 
                     <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; font-size: 12px; color: #666;">
-                        <p><strong>Data e hora da notificação:</strong> ${Date().toLocaleString('pt-BR')}<br>
+                        <p><strong>Data e hora da notificação:</strong> ${Date.prototype.toLocaleString('pt-BR')}<br>
                         <p style="margin-top: 20px;">Este é um e-mail automático. Em caso de dúvidas, entre em contato com <a href="mailto:octavio.polari@gmail.com">Octavio Polari Jardim 50562</a>.</p>
                     </div>
                 </div>
