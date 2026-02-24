@@ -32,6 +32,7 @@ app.post("/api/ams", async (req, res) => {
 
     const posto = req.body.posto;
     const nvl = req.body.nvl;
+    const data = req.body.data;
 
     const mail = {
         sender: { email: process.env.BREVO_FROM },
@@ -71,7 +72,7 @@ app.post("/api/ams", async (req, res) => {
                     </div>
                     
                     <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; font-size: 12px; color: #666;">
-                        <p><strong>Data e hora da notificação:</strong> ${new Date().toLocaleString('pt-BR')}<br>
+                        <p><strong>Data e hora da notificação:</strong> ${data}<br>
                         <p style="margin-top: 20px;">Este é um e-mail automático. Em caso de dúvidas, entre em contato com <a href="mailto:octavio.polari@gmail.com">Octavio Polari Jardim 50562</a>.</p>
                     </div>
                 </div>
