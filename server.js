@@ -32,6 +32,7 @@ app.post("/api/ams", async (req, res) => {
 
     const posto = req.body.posto;
     const nvl = req.body.nvl;
+    const id = req.body.reqID;
     const data = req.body.data;
 
     const mail = {
@@ -47,6 +48,7 @@ app.post("/api/ams", async (req, res) => {
             </head>
             <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 20px;">
                 <div style="max-width: 600px; margin: 0 auto;">
+                    <p><strong>Nº do Protocolo:</strong> ${id}</p>
                     <p>Prezados,<br>
                     Venho por meio desta notificar o estado da região próxima à unidade <strong>${posto}</strong>.<br>
                     <br>
