@@ -145,7 +145,7 @@ app.post("/api/conexao_estavel", async (req, res) => {
                     
 
                     <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; font-size: 12px; color: #666;">
-                        <p><strong>Data e hora da notificação:</strong> ${Date.prototype.toLocaleString('pt-BR')}</p><br>
+                        <p><strong>Data e hora da notificação:</strong> ${new Date().toLocaleString('pt-BR')}</p><br>
                         <p style="margin-top: 20px;">Este é um e-mail automático. Em caso de dúvidas, entre em contato com <a href="mailto:octavio.polari@gmail.com">Octavio Polari Jardim 50562</a>.</p>
                     </div>
                 </div>
@@ -164,31 +164,6 @@ app.post("/api/conexao_estavel", async (req, res) => {
         console.log(500,"Message Failed!\n",error);
     }
 })
-// app.post("/api/bolsa_familia", async (req, res) => {
-//     console.log("📩 Requisição recebida:", req.body);
-
-//     const attachment = req.body.attachment;
-
-//     const mail = {
-//         sender: { email: process.env.BREVO_FROM },
-//         to: [{ email: process.env.SEND_USER }],
-//         subject: `${nvl} Notificação Acesso Mais Seguro ${nvl}`,
-//         htmlContent: `
-//             Prezados,<br>
-//             ${attachment}
-//         `,
-//     };
-
-//     try {
-//         await apiInstance.sendTransacEmail(mail);
-
-//         res.json({ code: 200, status: 'Message Sent!' });
-//         console.log(200,"Message Sent!");
-//     } catch (error) {
-//         res.status(500).json({code: 500, error});
-//         console.log(500,"Message Failed!\n",error);
-//     }
-// })
 
 app.post('/api/bolsa_familia', async (req, res) => {
     console.log("📩 Requisição recebida em /api/bolsa_familia");
