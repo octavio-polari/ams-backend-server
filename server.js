@@ -26,7 +26,6 @@ app.get("/api", (req, res) => {
     res.json({ message: "Hello from server!" })
 });
 
-
 app.post("/api/ams", async (req, res) => {
     console.log("📩 Requisição recebida:", req.body);
 
@@ -75,7 +74,7 @@ app.post("/api/ams", async (req, res) => {
                     
                     <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; font-size: 12px; color: #666;">
                         <p><strong>Data e hora da notificação:</strong> ${data}<br>
-                        <p style="margin-top: 20px;">Este é um e-mail automático. Em caso de dúvidas, entre em contato com <a href="mailto:octavio.polari@gmail.com">Octavio Polari Jardim 50562</a>.</p>
+                        <p style="margin-top: 20px;">Este é um e-mail automático. Em caso de dúvidas, entre em contato com <a href="mailto:octavio.polari@gmail.com?subject=Acesso Mais Seguro">Octavio Polari Jardim 50562</a>.</p>
                     </div>
                 </div>
             </body>
@@ -150,7 +149,7 @@ app.post("/api/conexao_estavel", async (req, res) => {
 
                     <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; font-size: 12px; color: #666;">
                         <p><strong>Data e hora da notificação:</strong> ${data}</p><br>
-                        <p style="margin-top: 20px;">Este é um e-mail automático. Em caso de dúvidas, entre em contato com <a href="mailto:octavio.polari@gmail.com">Octavio Polari Jardim 50562</a>.</p>
+                        <p style="margin-top: 20px;">Este é um e-mail automático. Em caso de dúvidas, entre em contato com <a href="mailto:octavio.polari@gmail.com?subject=Conexão Estável">Octavio Polari Jardim 50562</a>.</p>
                     </div>
                 </div>
             </body>
@@ -200,7 +199,7 @@ app.post('/api/bolsa_familia', async (req, res) => {
 
                     <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; font-size: 12px; color: #666;">
                         <p><strong>Data e hora da notificação:</strong> ${date}</p><br>
-                        <p style="margin-top: 20px;">Este é um e-mail automático. Em caso de dúvidas, entre em contato com <a href="mailto:octavio.polari@gmail.com">Octavio Polari Jardim 50562</a>.</p>
+                        <p style="margin-top: 20px;">Este é um e-mail automático. Em caso de dúvidas, entre em contato com <a href="mailto:octavio.polari@gmail.com?subject=Cadastro do Bolsa Família">Octavio Polari Jardim 50562</a>.</p>
                     </div>
                 </div>
             </body>
@@ -223,7 +222,6 @@ app.post('/api/bolsa_familia', async (req, res) => {
         res.status(500).json({ success: false, message: 'Erro ao enviar e-mail', error: String(err) });
     }
 });
-
 
 app.listen(PORT, () => {
     console.log(`Server is online on port: ${PORT}`)
