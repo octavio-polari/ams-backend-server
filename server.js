@@ -170,9 +170,8 @@ app.post("/api/conexao_estavel", async (req, res) => {
 })
 
 app.post('/api/bolsa_familia', async (req, res) => {
-    console.log("📩 Requisição recebida em /api/bolsa_familia");
 
-    const { filename, mimeType, data } = req.body;
+    const { filename, mimeType, data, date, id } = req.body;
 
     if (!filename || !data) {
         return res.status(400).json({ success: false, message: 'filename e data (base64) são obrigatórios' });
@@ -183,10 +182,29 @@ app.post('/api/bolsa_familia', async (req, res) => {
         to: [{ email: process.env.SEND_USER }],
         subject: '📎 PDF do Cadastro do Bolsa Família',
         htmlContent: `
-            Prezados,<br>
-            <br>
-            Segue em anexo o PDF gerado pelo aplicativo de cadastro do Bolsa Família.<br><br>
-            <strong>Arquivo:</strong> ${filename}
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="UTF-8">
+                <title>Notificação de Status de Internet</title>
+            </head>
+            <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 20px;">
+                <div style="max-width: 600px; margin: 0 auto;">
+                    <p><strong>Nº do Protocolo:</strong> ${id}</p>
+                    <p>Prezados,<br>
+                        <div style="margin-top: 20px;">
+                            Segue em anexo o PDF gerado pelo aplicativo de cadastro do Bolsa Família.<br><br>
+                            <strong>Arquivo:</strong> ${filename}
+                        </div>
+                    </p>
+
+                    <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; font-size: 12px; color: #666;">
+                        <p><strong>Data e hora da notificação:</strong> ${date}</p><br>
+                        <p style="margin-top: 20px;">Este é um e-mail automático. Em caso de dúvidas, entre em contato com <a href="mailto:octavio.polari@gmail.com">Octavio Polari Jardim 50562</a>.</p>
+                    </div>
+                </div>
+            </body>
+            </html>
         `,
         attachment: [
             {
